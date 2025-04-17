@@ -40,16 +40,23 @@ Este projeto é uma API para um web app de flashcards de estudo, desenvolvido co
 4. Instale as dependências do projeto:
     ```bash
     pip install -r requirements.txt
-5. Execute as migrações para configurar o banco de dados:
+5. Crie um arquivo python e gere uma nova chave de secreta do Django:
+    ```python
+    from django.core.management.utils import get_random_secret_key; 
+    print(get_random_secret_key())
+6. Crie um arquivo `.env` e salve a `SECRET_KEY`:
+    ```bash
+    SECRET_KEY='<CHAVE_GERADA_NO_PASSO_5>'
+7. Execute as migrações para configurar o banco de dados:
     ```bash
     python manage.py migrate
-6. Execute o servidor local:
+8. Execute o servidor local:
     ```bash
     python manage.py runserver
-7. Crie um super usuário para administrar o banco local
+9. Crie um super usuário para administrar o banco local
     ```bash
     python manage.py createsuperuser
-    ## Autenticação
+## Autenticação
 A etapa de autenticação com o django rest-framework pode ser feito utilizando um token por usuário cadastrado.<br>
 O DRF tem o módulo `rest_framework.authtoken` que auxilia na hora de implementar autenticação para a nossa api.<br>
 Uma vez implementado esse módulo é possível utilizar o comando abaixo para obter um token para um usuário especificado:
