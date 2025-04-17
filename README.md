@@ -49,6 +49,27 @@ Este projeto é uma API para um web app de flashcards de estudo, desenvolvido co
 7. Crie um super usuário para administrar o banco local
     ```bash
     python manage.py createsuperuser
+    ## Autenticação
+A etapa de autenticação com o django rest-framework pode ser feito utilizando um token por usuário cadastrado.<br>
+O DRF tem o módulo `rest_framework.authtoken` que auxilia na hora de implementar autenticação para a nossa api.<br>
+Uma vez implementado esse módulo é possível utilizar o comando abaixo para obter um token para um usuário especificado:
+```bash
+python manage.py drf_create_token "nome_do_usuario"
+```
+Depois de gerar o token, abra o arquivo `authentication_token.py` na pasta playground e cole o token no lugar de `<TOKEN GERADO>`<br><br>
+No entanto, a principal forma de autenticação é através da chamada: 
+```bash
+POST http://127.0.0.1:8000/api/auth/login/
+
+body: 
+{
+    'username':'<NOME_DO_USUARIO>';
+    'password':'<SENHA>';
+}
+```
+Dessa forma se obterá o token de autenticação. <br>
+[Referência 1](https://simpleisbetterthancomplex.com/tutorial/2018/11/22/how-to-implement-token-authentication-using-django-rest-framework.html)<br>
+[Referência 2](https://dev.to/romeopeter/django-rest-framework-tokenauthentication-1544)
 ## Endpoints Principais
 
 ### 1. Disciplinas
