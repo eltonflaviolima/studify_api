@@ -46,6 +46,9 @@ Este projeto é uma API para um web app de flashcards de estudo, desenvolvido co
 6. Execute o servidor local:
     ```bash
     python manage.py runserver
+7. Crie um super usuário para administrar o banco local
+    ```bash
+    python manage.py createsuperuser
 ## Endpoints Principais
 
 ### 1. Disciplinas
