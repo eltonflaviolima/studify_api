@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login JWT</title>
+</head>
+
+<body>
+    <h1>Login com JWT</h1>
+
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Usuário" required />
+        <input type="password" id="password" placeholder="Senha" required />
+        <button type="submit">Login</button>
+    </form>
+
+    <hr>
+
+    <h2>Testar rota protegida</h2>
+    <button onclick="accessProtected()">Acessar rota protegida</button>
+    <pre id="result"></pre>
+
+    <script>
+        let accessToken = null;
+
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // evita que a página recarregue
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch("http://localhost:8000/api/auth/login/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert("Usuário logado com sucesso!\nAccess Token:\n" + data.access);
+                    // Armazena o token no localStorage ou sessionStorage, se quiser
+                    // localStorage.setItem("accessToken", data.access);
+                    localStorage.setItem("accessToken", data.access);
+                } else {
+                    console.error("Erro ao registrar:", data);
+                    alert("Erro ao registrar: " + (data.detail || JSON.stringify(data)));
+                }
+
+            } catch (error) {
+                console.error("Erro na requisição:", error);
+                alert("Erro inesperado: " + error.message);
+            }
+        });
+
+        async function accessProtected() {
+            const token = localStorage.getItem("accessToken");
+            if (!token) {
+                document.getElementById("result").innerText = "Você precisa logar antes!";
+                return;
+            }
+
+            console.log("Testando")
+            console.log(token)
+
+            const response = await fetch("http://localhost:8000/api/", {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+
+</html>
