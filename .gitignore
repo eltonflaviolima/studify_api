@@ -23,6 +23,9 @@ media
 # C extensions
 *.so
 
+# Utilidades
+*utils/key.py
+
 # Distribution / packaging
 .Python
 build/
